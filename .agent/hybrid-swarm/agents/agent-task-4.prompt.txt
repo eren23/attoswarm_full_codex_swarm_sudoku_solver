@@ -1,0 +1,5 @@
+# Task: Test solver logic
+
+Add unit tests for the solver covering a valid puzzle, an already solved puzzle, an empty grid, and an unsolvable/invalid puzzle shape or state.
+
+Target files: tests/test_sudoku_solver.py

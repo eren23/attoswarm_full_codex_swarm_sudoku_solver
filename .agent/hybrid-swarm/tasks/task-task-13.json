@@ -1,0 +1,26 @@
+{
+  "task_id": "task-13",
+  "title": "Write runbook and merge summary",
+  "description": "Document how to install dependencies, run the API and frontend, execute tests, and summarize what was built in a concise merge summary for final handoff.",
+  "status": "done",
+  "task_kind": "merge",
+  "role_hint": "orchestrator",
+  "deps": [
+    "task-4",
+    "task-8",
+    "task-12"
+  ],
+  "target_files": [
+    "README.md",
+    "MERGE_SUMMARY.md"
+  ],
+  "read_files": [],
+  "files_modified": [],
+  "result_summary": "{\"type\":\"thread.started\",\"thread_id\":\"019d01c8-d005-7052-8134-7cf757092b7c\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I\u2019m inspecting the repo structure and the current docs first so I can write the runbook against how this project actually runs, not a guessed setup.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'git status --short'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'git status --short'\",\"aggregated_output\":\"fatal: not a git repository (or any of the parent directories): .git\\n\",\"exit_code\":128,\"status\":\"failed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'rg --files'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'rg --files'\",\"aggregated_output\":\"src/api/routes/solve.py\\nsrc/api/routes/__init__.py\\nsrc/api/main.py\\nsrc/api/schemas.py\\nsrc/api/__init__.py\\nsrc/app.py\\nsrc/solver/sudoku.py\\nsrc/solver/__init__.py\\nscripts/run-swarm.sh\\nREADME.swarm.md\\ndocs/sudoku-feature-plan.md\\ntests/e2e/test_web_ui.py\\ntests/test_api.py\\ntests/test_sudoku_solver.py\\ntests/swarm_smoke/test_placeholder.txt\\ntests/test_api_solve.py\\nrequirements.txt\\nfrontend/app.js\\nfrontend/styles.css\\nfrontend/index.html\\ntasks/goal.md\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"mcp_tool_call\",\"server\":\"attocode-code-intel\",\"tool\":\"bootstrap\",\"arguments\":{\"task_hint\":\"Write README runbook and merge summary documenting dependency installation, how to run the API and frontend, how to execute tests, and summarize what was built.\",\"max_tokens\":6000},\"result\":null,\"error\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"mcp_tool_call\",\"server\":\"attocode-code-intel\",\"tool\":\"bootstrap\",\"arguments\":{\"task_hint\":\"Write README runbook and merge summary documenting dependency installation, how to run the API and frontend, how to execute tests, and summarize what was built.\",\"max_tokens\":6000},\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"No files discovered in this project.\"}],\"structured_content\":{\"result\":\"No files discovered in this project.\"}},\"error\":null,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"agent_message\",\"text\":\"The repo is small and not a git checkout here, so I\u2019m reading the entry points and tests directly to reconstruct the exact run commands and the scope of the delivered feature.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,240p' src/api/main.py\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,220p' requirements.txt\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,240p' src/api/main.py\\\"\",\"aggregated_output\":\"\\\"\\\"\\\"FastAPI application bootstrap for local runs and tests.\\\"\\\"\\\"\\n\\nfrom __future__ import annotations\\n\\nimport os\\nfrom contextlib import asynccontextmanager\\nfrom dataclasses import dataclass\\nfrom pathlib import Path\\nfrom typing import AsyncIterator\\n\\nfrom fastapi import APIRouter, FastAPI\\nfrom fastapi.staticfiles import StaticFiles\\n\\nfrom src.api.routes.solve import router as solve_router\\n\\n\\nAPP_TITLE = \\\"Sudoku Solver API\\\"\\nAPP_VERSION = \\\"0.1.0\\\"\\nFRONTEND_DIR = Path(__file__).resolve().parents[2] / \\\"frontend\\\"\\n\\n\\n@dataclass(frozen=True)\\nclass AppSettings:\\n    \\\"\\\"\\\"Runtime settings exposed on application state.\\\"\\\"\\\"\\n\\n    environment: str\\n    testing: bool\\n\\n\\ndef build_settings(*",
+  "symbol_scope": [],
+  "tokens_used": 0,
+  "cost_usd": 0.0,
+  "attempt_count": 0,
+  "attempt_history": [],
+  "has_diff": false
+}

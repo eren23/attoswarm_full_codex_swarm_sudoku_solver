@@ -1,0 +1,5 @@
+# Task: Define feature structure
+
+Write a short implementation design that fixes the backend/frontend stack choice, directory layout, API contract, validation rules, and test strategy so the rest of the work can proceed against one agreed structure.
+
+Target files: docs/sudoku-feature-plan.md

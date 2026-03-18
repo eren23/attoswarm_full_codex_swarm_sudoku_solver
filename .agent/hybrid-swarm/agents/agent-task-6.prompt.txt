@@ -1,0 +1,5 @@
+# Task: Create FastAPI app entrypoint
+
+Create the FastAPI application bootstrap with application startup configuration and a GET /health endpoint suitable for tests and local runs.
+
+Target files: src/api/main.py

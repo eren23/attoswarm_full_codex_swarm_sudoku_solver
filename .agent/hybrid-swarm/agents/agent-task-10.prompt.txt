@@ -1,0 +1,5 @@
+# Task: Add responsive UI styling
+
+Implement the frontend CSS for a responsive Sudoku layout, visually grouped 3x3 boxes, readable inputs, and clear feedback states for errors and solved output.
+
+Target files: frontend/styles.css

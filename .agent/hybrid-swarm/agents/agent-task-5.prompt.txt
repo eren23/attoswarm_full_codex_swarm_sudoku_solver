@@ -1,0 +1,5 @@
+# Task: Add API schemas
+
+Define request and response models for the solve API with strict validation for 9x9 shape and cell values 0-9, plus clear validation messages for bad input.
+
+Target files: src/api/schemas.py

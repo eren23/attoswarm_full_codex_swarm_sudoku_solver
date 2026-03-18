@@ -1,0 +1,5 @@
+# Task: Test API behavior
+
+Add API tests for health, a valid solve request, an empty grid, malformed grid dimensions, and out-of-range values, asserting both status codes and response bodies.
+
+Target files: tests/test_api.py

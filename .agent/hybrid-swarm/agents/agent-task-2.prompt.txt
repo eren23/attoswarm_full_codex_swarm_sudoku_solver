@@ -1,0 +1,5 @@
+# Task: Create project scaffolding
+
+Add the Python package skeleton and dependency manifest for the Sudoku feature, including backend package directories and any minimal entrypoint files needed before implementation starts.
+
+Target files: requirements.txt, src/api/__init__.py, src/api/routes/__init__.py, src/solver/__init__.py

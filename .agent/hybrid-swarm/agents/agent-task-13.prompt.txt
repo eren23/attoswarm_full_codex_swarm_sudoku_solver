@@ -1,0 +1,5 @@
+# Task: Write runbook and merge summary
+
+Document how to install dependencies, run the API and frontend, execute tests, and summarize what was built in a concise merge summary for final handoff.
+
+Target files: README.md, MERGE_SUMMARY.md

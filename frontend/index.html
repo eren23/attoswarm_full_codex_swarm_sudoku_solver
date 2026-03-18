@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudoku Solver</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="page" data-page="sudoku-app">
+    <section class="sudoku-app" aria-labelledby="page-title">
+      <header class="page-header">
+        <p class="eyebrow">Sudoku Solver</p>
+        <h1 id="page-title">Solve a 9x9 puzzle in one pass</h1>
+        <p class="page-copy">
+          Enter digits 1 through 9 into the grid. Leave a cell empty to mark it as unsolved.
+        </p>
+      </header>
+
+      <section class="status-panel" aria-label="Puzzle status">
+        <p id="status-message" class="status-message" role="status" aria-live="polite" data-status-message>
+          Enter a puzzle and choose Solve to request a solution.
+        </p>
+      </section>
+
+      <form class="sudoku-form" data-sudoku-form novalidate>
+        <section class="board-panel" aria-labelledby="board-title">
+          <div class="board-header">
+            <h2 id="board-title">Puzzle Grid</h2>
+            <p class="board-caption">Each cell accepts a single digit.</p>
+          </div>
+
+          <div
+            id="sudoku-grid"
+            class="sudoku-grid"
+            role="grid"
+            aria-label="Sudoku puzzle grid"
+            data-sudoku-grid
+          >
+            <div class="sudoku-row" role="row" data-row="0">
+              <input id="cell-r1c1" class="sudoku-cell" data-cell data-row="0" data-col="0" data-box="0" name="r1c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 1">
+              <input id="cell-r1c2" class="sudoku-cell" data-cell data-row="0" data-col="1" data-box="0" name="r1c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 2">
+              <input id="cell-r1c3" class="sudoku-cell" data-cell data-row="0" data-col="2" data-box="0" name="r1c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 3">
+              <input id="cell-r1c4" class="sudoku-cell" data-cell data-row="0" data-col="3" data-box="1" name="r1c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 4">
+              <input id="cell-r1c5" class="sudoku-cell" data-cell data-row="0" data-col="4" data-box="1" name="r1c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 5">
+              <input id="cell-r1c6" class="sudoku-cell" data-cell data-row="0" data-col="5" data-box="1" name="r1c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 6">
+              <input id="cell-r1c7" class="sudoku-cell" data-cell data-row="0" data-col="6" data-box="2" name="r1c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 7">
+              <input id="cell-r1c8" class="sudoku-cell" data-cell data-row="0" data-col="7" data-box="2" name="r1c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 8">
+              <input id="cell-r1c9" class="sudoku-cell" data-cell data-row="0" data-col="8" data-box="2" name="r1c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 1 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="1">
+              <input id="cell-r2c1" class="sudoku-cell" data-cell data-row="1" data-col="0" data-box="0" name="r2c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 1">
+              <input id="cell-r2c2" class="sudoku-cell" data-cell data-row="1" data-col="1" data-box="0" name="r2c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 2">
+              <input id="cell-r2c3" class="sudoku-cell" data-cell data-row="1" data-col="2" data-box="0" name="r2c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 3">
+              <input id="cell-r2c4" class="sudoku-cell" data-cell data-row="1" data-col="3" data-box="1" name="r2c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 4">
+              <input id="cell-r2c5" class="sudoku-cell" data-cell data-row="1" data-col="4" data-box="1" name="r2c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 5">
+              <input id="cell-r2c6" class="sudoku-cell" data-cell data-row="1" data-col="5" data-box="1" name="r2c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 6">
+              <input id="cell-r2c7" class="sudoku-cell" data-cell data-row="1" data-col="6" data-box="2" name="r2c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 7">
+              <input id="cell-r2c8" class="sudoku-cell" data-cell data-row="1" data-col="7" data-box="2" name="r2c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 8">
+              <input id="cell-r2c9" class="sudoku-cell" data-cell data-row="1" data-col="8" data-box="2" name="r2c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 2 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="2">
+              <input id="cell-r3c1" class="sudoku-cell" data-cell data-row="2" data-col="0" data-box="0" name="r3c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 1">
+              <input id="cell-r3c2" class="sudoku-cell" data-cell data-row="2" data-col="1" data-box="0" name="r3c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 2">
+              <input id="cell-r3c3" class="sudoku-cell" data-cell data-row="2" data-col="2" data-box="0" name="r3c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 3">
+              <input id="cell-r3c4" class="sudoku-cell" data-cell data-row="2" data-col="3" data-box="1" name="r3c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 4">
+              <input id="cell-r3c5" class="sudoku-cell" data-cell data-row="2" data-col="4" data-box="1" name="r3c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 5">
+              <input id="cell-r3c6" class="sudoku-cell" data-cell data-row="2" data-col="5" data-box="1" name="r3c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 6">
+              <input id="cell-r3c7" class="sudoku-cell" data-cell data-row="2" data-col="6" data-box="2" name="r3c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 7">
+              <input id="cell-r3c8" class="sudoku-cell" data-cell data-row="2" data-col="7" data-box="2" name="r3c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 8">
+              <input id="cell-r3c9" class="sudoku-cell" data-cell data-row="2" data-col="8" data-box="2" name="r3c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 3 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="3">
+              <input id="cell-r4c1" class="sudoku-cell" data-cell data-row="3" data-col="0" data-box="3" name="r4c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 1">
+              <input id="cell-r4c2" class="sudoku-cell" data-cell data-row="3" data-col="1" data-box="3" name="r4c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 2">
+              <input id="cell-r4c3" class="sudoku-cell" data-cell data-row="3" data-col="2" data-box="3" name="r4c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 3">
+              <input id="cell-r4c4" class="sudoku-cell" data-cell data-row="3" data-col="3" data-box="4" name="r4c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 4">
+              <input id="cell-r4c5" class="sudoku-cell" data-cell data-row="3" data-col="4" data-box="4" name="r4c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 5">
+              <input id="cell-r4c6" class="sudoku-cell" data-cell data-row="3" data-col="5" data-box="4" name="r4c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 6">
+              <input id="cell-r4c7" class="sudoku-cell" data-cell data-row="3" data-col="6" data-box="5" name="r4c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 7">
+              <input id="cell-r4c8" class="sudoku-cell" data-cell data-row="3" data-col="7" data-box="5" name="r4c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 8">
+              <input id="cell-r4c9" class="sudoku-cell" data-cell data-row="3" data-col="8" data-box="5" name="r4c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 4 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="4">
+              <input id="cell-r5c1" class="sudoku-cell" data-cell data-row="4" data-col="0" data-box="3" name="r5c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 1">
+              <input id="cell-r5c2" class="sudoku-cell" data-cell data-row="4" data-col="1" data-box="3" name="r5c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 2">
+              <input id="cell-r5c3" class="sudoku-cell" data-cell data-row="4" data-col="2" data-box="3" name="r5c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 3">
+              <input id="cell-r5c4" class="sudoku-cell" data-cell data-row="4" data-col="3" data-box="4" name="r5c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 4">
+              <input id="cell-r5c5" class="sudoku-cell" data-cell data-row="4" data-col="4" data-box="4" name="r5c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 5">
+              <input id="cell-r5c6" class="sudoku-cell" data-cell data-row="4" data-col="5" data-box="4" name="r5c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 6">
+              <input id="cell-r5c7" class="sudoku-cell" data-cell data-row="4" data-col="6" data-box="5" name="r5c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 7">
+              <input id="cell-r5c8" class="sudoku-cell" data-cell data-row="4" data-col="7" data-box="5" name="r5c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 8">
+              <input id="cell-r5c9" class="sudoku-cell" data-cell data-row="4" data-col="8" data-box="5" name="r5c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 5 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="5">
+              <input id="cell-r6c1" class="sudoku-cell" data-cell data-row="5" data-col="0" data-box="3" name="r6c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 1">
+              <input id="cell-r6c2" class="sudoku-cell" data-cell data-row="5" data-col="1" data-box="3" name="r6c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 2">
+              <input id="cell-r6c3" class="sudoku-cell" data-cell data-row="5" data-col="2" data-box="3" name="r6c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 3">
+              <input id="cell-r6c4" class="sudoku-cell" data-cell data-row="5" data-col="3" data-box="4" name="r6c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 4">
+              <input id="cell-r6c5" class="sudoku-cell" data-cell data-row="5" data-col="4" data-box="4" name="r6c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 5">
+              <input id="cell-r6c6" class="sudoku-cell" data-cell data-row="5" data-col="5" data-box="4" name="r6c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 6">
+              <input id="cell-r6c7" class="sudoku-cell" data-cell data-row="5" data-col="6" data-box="5" name="r6c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 7">
+              <input id="cell-r6c8" class="sudoku-cell" data-cell data-row="5" data-col="7" data-box="5" name="r6c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 8">
+              <input id="cell-r6c9" class="sudoku-cell" data-cell data-row="5" data-col="8" data-box="5" name="r6c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 6 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="6">
+              <input id="cell-r7c1" class="sudoku-cell" data-cell data-row="6" data-col="0" data-box="6" name="r7c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 1">
+              <input id="cell-r7c2" class="sudoku-cell" data-cell data-row="6" data-col="1" data-box="6" name="r7c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 2">
+              <input id="cell-r7c3" class="sudoku-cell" data-cell data-row="6" data-col="2" data-box="6" name="r7c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 3">
+              <input id="cell-r7c4" class="sudoku-cell" data-cell data-row="6" data-col="3" data-box="7" name="r7c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 4">
+              <input id="cell-r7c5" class="sudoku-cell" data-cell data-row="6" data-col="4" data-box="7" name="r7c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 5">
+              <input id="cell-r7c6" class="sudoku-cell" data-cell data-row="6" data-col="5" data-box="7" name="r7c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 6">
+              <input id="cell-r7c7" class="sudoku-cell" data-cell data-row="6" data-col="6" data-box="8" name="r7c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 7">
+              <input id="cell-r7c8" class="sudoku-cell" data-cell data-row="6" data-col="7" data-box="8" name="r7c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 8">
+              <input id="cell-r7c9" class="sudoku-cell" data-cell data-row="6" data-col="8" data-box="8" name="r7c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 7 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="7">
+              <input id="cell-r8c1" class="sudoku-cell" data-cell data-row="7" data-col="0" data-box="6" name="r8c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 1">
+              <input id="cell-r8c2" class="sudoku-cell" data-cell data-row="7" data-col="1" data-box="6" name="r8c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 2">
+              <input id="cell-r8c3" class="sudoku-cell" data-cell data-row="7" data-col="2" data-box="6" name="r8c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 3">
+              <input id="cell-r8c4" class="sudoku-cell" data-cell data-row="7" data-col="3" data-box="7" name="r8c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 4">
+              <input id="cell-r8c5" class="sudoku-cell" data-cell data-row="7" data-col="4" data-box="7" name="r8c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 5">
+              <input id="cell-r8c6" class="sudoku-cell" data-cell data-row="7" data-col="5" data-box="7" name="r8c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 6">
+              <input id="cell-r8c7" class="sudoku-cell" data-cell data-row="7" data-col="6" data-box="8" name="r8c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 7">
+              <input id="cell-r8c8" class="sudoku-cell" data-cell data-row="7" data-col="7" data-box="8" name="r8c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 8">
+              <input id="cell-r8c9" class="sudoku-cell" data-cell data-row="7" data-col="8" data-box="8" name="r8c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 8 Column 9">
+            </div>
+            <div class="sudoku-row" role="row" data-row="8">
+              <input id="cell-r9c1" class="sudoku-cell" data-cell data-row="8" data-col="0" data-box="6" name="r9c1" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 1">
+              <input id="cell-r9c2" class="sudoku-cell" data-cell data-row="8" data-col="1" data-box="6" name="r9c2" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 2">
+              <input id="cell-r9c3" class="sudoku-cell" data-cell data-row="8" data-col="2" data-box="6" name="r9c3" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 3">
+              <input id="cell-r9c4" class="sudoku-cell" data-cell data-row="8" data-col="3" data-box="7" name="r9c4" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 4">
+              <input id="cell-r9c5" class="sudoku-cell" data-cell data-row="8" data-col="4" data-box="7" name="r9c5" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 5">
+              <input id="cell-r9c6" class="sudoku-cell" data-cell data-row="8" data-col="5" data-box="7" name="r9c6" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 6">
+              <input id="cell-r9c7" class="sudoku-cell" data-cell data-row="8" data-col="6" data-box="8" name="r9c7" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 7">
+              <input id="cell-r9c8" class="sudoku-cell" data-cell data-row="8" data-col="7" data-box="8" name="r9c8" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 8">
+              <input id="cell-r9c9" class="sudoku-cell" data-cell data-row="8" data-col="8" data-box="8" name="r9c9" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off" aria-label="Row 9 Column 9">
+            </div>
+          </div>
+        </section>
+
+        <section class="controls-panel" aria-label="Puzzle controls">
+          <div class="controls" data-controls>
+            <button id="solve-button" class="control-button primary" type="button" data-action="solve">
+              Solve
+            </button>
+            <button id="clear-button" class="control-button secondary" type="reset" data-action="clear">
+              Clear
+            </button>
+          </div>
+        </section>
+      </form>
+    </section>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

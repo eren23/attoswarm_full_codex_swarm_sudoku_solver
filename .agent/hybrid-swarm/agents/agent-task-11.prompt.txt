@@ -1,0 +1,5 @@
+# Task: Implement frontend interactions
+
+Add browser-side logic for editing cells, clearing the board, validating duplicate conflicts in rows/columns/boxes, calling the solve API, and rendering returned solutions/messages.
+
+Target files: frontend/app.js

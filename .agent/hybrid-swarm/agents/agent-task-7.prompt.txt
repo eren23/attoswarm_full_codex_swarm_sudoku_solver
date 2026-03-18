@@ -1,0 +1,5 @@
+# Task: Implement solve endpoint
+
+Add the POST /solve route that accepts the validated grid payload, calls the Sudoku solver, returns the required response shape, and handles unsolvable cases cleanly.
+
+Target files: src/api/routes/solve.py

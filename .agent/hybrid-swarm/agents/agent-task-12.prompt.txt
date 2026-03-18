@@ -1,0 +1,5 @@
+# Task: Verify end-to-end flow
+
+Add an end-to-end or browser-driven integration test that loads the web UI, enters a representative puzzle, triggers Solve, and verifies the solved values appear in the grid.
+
+Target files: tests/e2e/test_web_ui.py

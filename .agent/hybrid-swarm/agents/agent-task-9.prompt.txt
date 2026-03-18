@@ -1,0 +1,5 @@
+# Task: Build Sudoku page markup
+
+Create the single-page frontend HTML structure with a 9x9 grid, status/message area, Solve and Clear controls, and hooks for client-side behavior.
+
+Target files: frontend/index.html

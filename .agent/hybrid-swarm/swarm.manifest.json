@@ -1,0 +1,184 @@
+{
+  "run_id": "0c6e114b",
+  "goal": "# Swarm Goal: Sudoku Solver with Web Frontend\n\n## Overview\n\nBuild a Sudoku solving feature with backend solver logic, REST API, and a web frontend. All work must be tested and the final merge must produce a clean, working feature with a merge summary.\n\n---\n\n## Requirements\n\n### 1. Backend Solver (Python)\n\n- **Sudoku solver module** (`src/solver/sudoku.py` or equivalent):\n  - Accept a 9\u00d79 grid (0 or empty for blanks)\n  - Return solved grid or indicate unsolvable\n  - Use constraint propagation / backtracking (classic algorithms)\n  - Pure functions, no side effects\n\n- **Solver API** (FastAPI or Flask):\n  - `POST /solve` \u2014 body: `{\"grid\": [[...], ...]}`, response: `{\"solved\": bool, \"grid\": [[...]], \"message\": str}`\n  - `GET /health` \u2014 health check\n  - Input validation (9\u00d79, values 0\u20139)\n  - Clear error responses for invalid input\n\n### 2. Frontend (Web UI)\n\n- Single-page web app (HTML/JS or React/Next.js):\n  - Renders a 9\u00d79 Sudoku grid\n  - User can type numbers (1\u20139) or clear cells\n  - \"Solve\" button \u2192 calls backend API \u2192 shows solution\n  - \"Clear\" button \u2192 resets grid\n  - Basic validation (no duplicate in row/col/box for user input)\n  - Responsive layout\n\n### 3. Tests\n\n- Unit tests for solver logic (valid, invalid, empty, already solved)\n- API tests (valid request, invalid grid, empty grid)\n- Optional: E2E test that loads UI, enters a puzzle, clicks Solve, verifies result\n\n### 4. Deliverables\n\n- Working solver backend with API\n- Working frontend that consumes the API\n- Test suite that passes\n- `requirements.txt` (Python) and dependency file for frontend if applicable\n- Brief merge summary documenting what was built and how to run it\n\n---\n\n## Tech Stack (Suggested)\n\n- **Backend**: Python 3.10+, FastAPI, Pydantic\n- **Frontend**: Plain HTML/CSS/JS + fetch, or React + Vite\n- **Tests**: pytest for backend; Playwright or similar for E2E if added\n\n---\n\n## Success Criteria\n\n1. Given a valid Sudoku puzzle, the solver returns the correct solution.\n2. The API accepts and rejects input according to spec.\n3. The frontend displays a grid, allows input, and shows the solution from the API.\n4. All automated tests pass.\n5. A merge summary is produced at completion.",
+  "tasks": [
+    {
+      "task_id": "task-1",
+      "title": "Define feature structure",
+      "description": "Write a short implementation design that fixes the backend/frontend stack choice, directory layout, API contract, validation rules, and test strategy so the rest of the work can proceed against one agreed structure.",
+      "deps": [],
+      "target_files": [
+        "docs/sudoku-feature-plan.md"
+      ],
+      "task_kind": "design",
+      "role_hint": "orchestrator"
+    },
+    {
+      "task_id": "task-2",
+      "title": "Create project scaffolding",
+      "description": "Add the Python package skeleton and dependency manifest for the Sudoku feature, including backend package directories and any minimal entrypoint files needed before implementation starts.",
+      "deps": [
+        "task-1"
+      ],
+      "target_files": [
+        "requirements.txt",
+        "src/api/__init__.py",
+        "src/api/routes/__init__.py",
+        "src/solver/__init__.py"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-3",
+      "title": "Implement Sudoku solver core",
+      "description": "Build the pure Sudoku solving module with 9x9 grid handling, candidate checking, constraint propagation/backtracking, solved-state detection, and an explicit unsolvable result path.",
+      "deps": [
+        "task-2"
+      ],
+      "target_files": [
+        "src/solver/sudoku.py"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-4",
+      "title": "Test solver logic",
+      "description": "Add unit tests for the solver covering a valid puzzle, an already solved puzzle, an empty grid, and an unsolvable/invalid puzzle shape or state.",
+      "deps": [
+        "task-3"
+      ],
+      "target_files": [
+        "tests/test_sudoku_solver.py"
+      ],
+      "task_kind": "test",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-5",
+      "title": "Add API schemas",
+      "description": "Define request and response models for the solve API with strict validation for 9x9 shape and cell values 0-9, plus clear validation messages for bad input.",
+      "deps": [
+        "task-2"
+      ],
+      "target_files": [
+        "src/api/schemas.py"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-6",
+      "title": "Create FastAPI app entrypoint",
+      "description": "Create the FastAPI application bootstrap with application startup configuration and a GET /health endpoint suitable for tests and local runs.",
+      "deps": [
+        "task-2"
+      ],
+      "target_files": [
+        "src/api/main.py"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-7",
+      "title": "Implement solve endpoint",
+      "description": "Add the POST /solve route that accepts the validated grid payload, calls the Sudoku solver, returns the required response shape, and handles unsolvable cases cleanly.",
+      "deps": [
+        "task-3",
+        "task-5",
+        "task-6"
+      ],
+      "target_files": [
+        "src/api/routes/solve.py"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-8",
+      "title": "Test API behavior",
+      "description": "Add API tests for health, a valid solve request, an empty grid, malformed grid dimensions, and out-of-range values, asserting both status codes and response bodies.",
+      "deps": [
+        "task-7"
+      ],
+      "target_files": [
+        "tests/test_api.py"
+      ],
+      "task_kind": "test",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-9",
+      "title": "Build Sudoku page markup",
+      "description": "Create the single-page frontend HTML structure with a 9x9 grid, status/message area, Solve and Clear controls, and hooks for client-side behavior.",
+      "deps": [
+        "task-1"
+      ],
+      "target_files": [
+        "frontend/index.html"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-10",
+      "title": "Add responsive UI styling",
+      "description": "Implement the frontend CSS for a responsive Sudoku layout, visually grouped 3x3 boxes, readable inputs, and clear feedback states for errors and solved output.",
+      "deps": [
+        "task-9"
+      ],
+      "target_files": [
+        "frontend/styles.css"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-11",
+      "title": "Implement frontend interactions",
+      "description": "Add browser-side logic for editing cells, clearing the board, validating duplicate conflicts in rows/columns/boxes, calling the solve API, and rendering returned solutions/messages.",
+      "deps": [
+        "task-7",
+        "task-9",
+        "task-10"
+      ],
+      "target_files": [
+        "frontend/app.js"
+      ],
+      "task_kind": "implement",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-12",
+      "title": "Verify end-to-end flow",
+      "description": "Add an end-to-end or browser-driven integration test that loads the web UI, enters a representative puzzle, triggers Solve, and verifies the solved values appear in the grid.",
+      "deps": [
+        "task-8",
+        "task-11"
+      ],
+      "target_files": [
+        "tests/e2e/test_web_ui.py"
+      ],
+      "task_kind": "integrate",
+      "role_hint": "impl"
+    },
+    {
+      "task_id": "task-13",
+      "title": "Write runbook and merge summary",
+      "description": "Document how to install dependencies, run the API and frontend, execute tests, and summarize what was built in a concise merge summary for final handoff.",
+      "deps": [
+        "task-4",
+        "task-8",
+        "task-12"
+      ],
+      "target_files": [
+        "README.md",
+        "MERGE_SUMMARY.md"
+      ],
+      "task_kind": "merge",
+      "role_hint": "orchestrator"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Task: Implement Sudoku solver core
+
+Build the pure Sudoku solving module with 9x9 grid handling, candidate checking, constraint propagation/backtracking, solved-state detection, and an explicit unsolvable result path.
+
+Target files: src/solver/sudoku.py
